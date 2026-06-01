@@ -4,6 +4,7 @@ from flask_login import login_required
 from app.services.dashboard_service import DashboardService
 from app.services.lead_service import LeadService
 from app.services.report_service import ReportService
+from app.services.supervisor_service import SupervisorService
 
 bp = Blueprint("api", __name__)
 
@@ -112,3 +113,16 @@ def get_dashboard():
 def get_reports():
     service = ReportService()
     return jsonify(service.get_report_data())
+
+
+@bp.route("/chat_orquestrador", methods=["POST"])
+@login_required
+def chat_orquestrador():
+    data = request.get_json(silent=True) or {}
+    message = (data.get("message") or data.get("mensagem") or "").strip()
+    if not message:
+        return jsonify({"error": "Mensagem obrigatoria."}), 400
+
+    service = SupervisorService()
+    resposta = service.run(message)
+    return jsonify({"response": resposta})

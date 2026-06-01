@@ -59,9 +59,9 @@ class LeadService:
         summary_agent, _ = self._build_agents()
         return summary_agent.run(lead)
 
-    def generate_followup(self, lead, variation=None):
+    def generate_followup(self, lead, variation=None, extra_instruction=None):
         _, followup_agent = self._build_agents()
-        return followup_agent.run(lead, variation)
+        return followup_agent.run(lead, variation, extra_instruction)
 
     def _calculate_score(self, data):
         score = self.scoring_service.calculate_score(

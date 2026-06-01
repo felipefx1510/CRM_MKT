@@ -16,6 +16,9 @@ class OllamaService:
     def generate_followup(self, prompt):
         return self._generate(prompt)
 
+    def generate_text(self, prompt):
+        return self._generate(prompt)
+
     def _generate(self, prompt):
         payload = {
             "model": self.model,

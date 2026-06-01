@@ -120,17 +120,27 @@ Exemplo de URL:
 postgresql+psycopg2://postgres:postgres@localhost:5432/crm_ai
 ```
 
-## Configuracao Ollama
+## Configuracao de IA (Ollama e Orquestrador)
+
+Este projeto usa o Ollama local para resumo, follow-up e o agente orquestrador.
 
 1) Instale o Ollama
-2) Baixe o modelo local:
+2) Baixe o modelo local (exemplo recomendado):
 
 ```
-ollama pull qwen3:8b
+ollama pull qwen3:4b
 ```
 
 3) Garanta que o servico esta ativo em `http://localhost:11434`
-4) Ajuste `OLLAMA_URL` e `OLLAMA_MODEL` no `.env`
+4) Ajuste as variaveis no `.env`:
+
+```
+OLLAMA_URL=http://localhost:11434/api/generate
+OLLAMA_MODEL=qwen3:4b
+OLLAMA_TIMEOUT=30
+```
+
+Observacao: voce pode trocar o modelo (ex: `qwen3:8b`) conforme o hardware.
 
 ## Endpoints API
 
@@ -141,6 +151,7 @@ ollama pull qwen3:8b
 - DELETE /api/leads/{id}
 - GET /api/dashboard
 - GET /api/reports
+- POST /api/chat_orquestrador
 
 ## Scripts SQL
 
