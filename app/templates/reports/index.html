@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Relatorios - CRM{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Relatorios</h2>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Total de Leads</p>
+                <h3>{{ report.total }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Media de Score</p>
+                <h3>{{ report.media_score }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Top 5 Leads por Score</h6>
+                <ul class="list-group list-group-flush">
+                    {% for lead in report.top_scores %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ lead.nome }}</span>
+                            <span class="badge bg-primary">{{ lead.score }}</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-muted">Sem dados.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Leads por Segmento</h6>
+                <ul class="list-group list-group-flush">
+                    {% for item in report.por_segmento %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ item.segmento }}</span>
+                            <span class="badge bg-secondary">{{ item.total }}</span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-muted">Sem dados.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

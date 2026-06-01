@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CRM{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard Gerencial</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Total de Leads</p>
+                <h3>{{ dashboard.kpis.total_leads }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Leads Quentes</p>
+                <h3>{{ dashboard.kpis.leads_quentes }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Leads em Negociacao</p>
+                <h3>{{ dashboard.kpis.leads_em_negociacao }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi-card">
+            <div class="card-body">
+                <p class="kpi-title">Conversoes</p>
+                <h3>{{ dashboard.kpis.conversoes }}</h3>
+                <small class="text-muted">Taxa: {{ dashboard.kpis.taxa_conversao }}%</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-4">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Leads por Origem</h6>
+                <canvas id="chartLeadsOrigem" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Leads por Mes</h6>
+                <canvas id="chartLeadsMes" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Conversoes por Canal</h6>
+                <canvas id="chartConversoes" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h6>Distribuicao de Scores</h6>
+                <canvas id="chartScores" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h6>Evolucao de Leads</h6>
+                <canvas id="chartEvolucao" height="140"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    window.dashboardData = {{ dashboard.charts | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

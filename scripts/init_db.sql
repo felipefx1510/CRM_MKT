@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    senha_hash VARCHAR(256) NOT NULL,
+    perfil VARCHAR(50) NOT NULL DEFAULT 'usuario',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS leads (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    telefone VARCHAR(30),
+    empresa VARCHAR(120),
+    origem VARCHAR(80) NOT NULL,
+    mensagem TEXT,
+    segmento VARCHAR(120),
+    interesse VARCHAR(20) NOT NULL,
+    score INTEGER NOT NULL DEFAULT 0,
+    classificacao_score VARCHAR(20) NOT NULL DEFAULT 'Frio',
+    status VARCHAR(40) NOT NULL DEFAULT 'Novo Lead',
+    resumo_ia TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS interactions (
+    id SERIAL PRIMARY KEY,
+    lead_id INTEGER NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+    mensagem TEXT NOT NULL,
+    tipo VARCHAR(30) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Leads - CRM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Leads</h2>
+    <a class="btn btn-primary" href="{{ url_for('leads.create_lead') }}">Novo Lead</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Buscar por nome, email ou empresa"
+            value="{{ search }}"
+        >
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="status">
+            <option value="">Todos os status</option>
+            {% for item in lead_statuses %}
+                <option value="{{ item }}" {% if status == item %}selected{% endif %}>
+                    {{ item }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" name="origem">
+            <option value="">Todas as origens</option>
+            {% for item in lead_origins %}
+                <option value="{{ item }}" {% if origem == item %}selected{% endif %}>
+                    {{ item }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2 d-grid">
+        <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+    </div>
+</form>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Origem</th>
+                    <th>Interesse</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for lead in leads %}
+                <tr>
+                    <td>{{ lead.nome }}</td>
+                    <td>{{ lead.email }}</td>
+                    <td>{{ lead.origem }}</td>
+                    <td>{{ lead.interesse }}</td>
+                    <td>{{ lead.score }} ({{ lead.classificacao_score }})</td>
+                    <td>{{ lead.status }}</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('leads.lead_detail', lead_id=lead.id) }}">Detalhes</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('leads.edit_lead', lead_id=lead.id) }}">Editar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Nenhum lead encontrado.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if pagination.pages > 1 %}
+<nav class="mt-3">
+    <ul class="pagination">
+        {% for page_num in range(1, pagination.pages + 1) %}
+            <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('leads.list_leads', page=page_num, search=search, status=status, origem=origem) }}">
+                    {{ page_num }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Pipeline - CRM{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Pipeline de Vendas</h2>
+
+<div class="kanban-board">
+    {% for status in statuses %}
+        <div class="kanban-column" data-status="{{ status }}">
+            <div class="kanban-column-header">
+                <span>{{ status }}</span>
+                <span class="badge bg-secondary">{{ leads_by_status[status]|length }}</span>
+            </div>
+            <div class="kanban-column-body">
+                {% for lead in leads_by_status[status] %}
+                    <div class="kanban-card" draggable="true" data-lead-id="{{ lead.id }}">
+                        <strong>{{ lead.nome }}</strong>
+                        <p class="mb-1">{{ lead.empresa or '-' }}</p>
+                        <small>{{ lead.origem }} | {{ lead.classificacao_score }}</small>
+                    </div>
+                {% else %}
+                    <div class="kanban-empty">Sem leads</div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/kanban.js') }}"></script>
+{% endblock %}
