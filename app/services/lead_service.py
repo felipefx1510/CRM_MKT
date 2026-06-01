@@ -67,6 +67,7 @@ class LeadService:
         score = self.scoring_service.calculate_score(
             data.get("origem"),
             data.get("interesse"),
+            data.get("segmento"),
         )
         classificacao = self.scoring_service.classify(score)
         return score, classificacao
