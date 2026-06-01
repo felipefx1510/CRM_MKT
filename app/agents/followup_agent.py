@@ -21,5 +21,5 @@ class FollowupAgent:
             f"Segmento: {lead.segmento or 'Nao informado'}\n"
             f"Interesse (urgencia): {lead.interesse}\n"
             f"Mensagem original: {lead.mensagem or 'Nao informado'}\n\n"
-            "Responda apenas com a mensagem pronta para envio."
+            "Responda em portugues do Brasil e apenas com a mensagem pronta para envio."
         )

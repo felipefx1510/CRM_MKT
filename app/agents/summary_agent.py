@@ -19,5 +19,5 @@ class SummaryAgent:
             f"Score: {lead.score}\n"
             f"Classificacao: {lead.classificacao_score}\n"
             f"Status: {lead.status}\n\n"
-            "Responda apenas com o resumo."
+            "Responda em portugues do Brasil e apenas com o resumo."
         )
